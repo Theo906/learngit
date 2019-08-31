@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				padding: 0px;
+				margin: 0px;
+			}
+			#outer{
+				width: 520px;
+				height: 333px;
+				margin: 50px auto;
+				padding: 10px 0px;
+				background-color: greenyellow;
+				overflow: hidden;
+				position: relative;
+			}
+			#imgList{
+				list-style: none;
+				position: absolute;
+			}
+			#imgList li{
+				float: left;
+				margin: 0px 10px;
+			}
+			#navDiv{
+				position: absolute;
+				bottom: 15px;
+			}
+			#navDiv a{
+				width: 15px;
+				height: 15px;
+				background-color: red;
+				float: left;
+				opacity: 0.5;
+				margin: 0px 5px;
+			}
+			#navDiv a:hover{
+				background-color: black;
+			}
+		</style>
+		<script type="text/javascript" src="js/tools.js"></script>
+		<script type="text/javascript">
+			window.onload = function(){
+				//获取imglist
+				var imgList = document.getElementById("imgList");
+				var imgArr = document.getElementsByTagName("img");
+				//设置imglist的宽度
+				imgList.style.width = imgArr.length*520+"px";
+				
+				//获取超链接
+				var navDiv = document.getElementById("navDiv");
+				var outer = document.getElementById("outer");
+				//设置超链接居中
+				navDiv.style.left =(outer.offsetWidth-navDiv.offsetWidth)/2+"px";
+				
+				//设置当前图片默认索引
+				var index = 0;
+				
+				//设置超连接第一个默认颜色
+				var allA = document.getElementsByTagName("a");
+				allA[index].style.backgroundColor = "black";
+				
+				//为所有超链接绑定函数
+				for(var i=0; i<allA.length ; i++){
+					allA[i].num = i;
+					allA[i].onclick = function(){
+						//关闭自动切换
+						clearInterval(timer);
+						
+						index = this.num;
+						setA();
+						move(imgList,"left",-520*index,20,function(){
+							//开启自动切换
+							autoChange();
+						})
+					};
+				}
+				
+				autoChange();
+				
+				//设置a的函数
+				function setA(){
+					if(index>=imgArr.length-1){
+						index = 0;
+						imgList.style.left = 0;
+					}
+					for(var i=0; i<allA.length; i++){
+						allA[i].style.backgroundColor = ""
+					}
+					//设置当前点击链接颜色
+					allA[index].style.backgroundColor = "black";
+				}
+				
+				var timer;
+				//设置自动切换函数
+				function autoChange(){
+					timer = setInterval(function(){
+						index++;
+						if(index >= imgArr.length){
+							index = 0;
+						}
+						move(imgList,"left",-520*index,30,function(){
+							setA();
+						})
+					},2000)
+				}
+			};
+		</script>
+	</head>
+	<body>
+		<div id="outer">
+			<ul id="imgList">
+				<li><img src="img/1.jpg" ></li>
+				<li><img src="img/2.jpg" ></li>
+				<li><img src="img/3.jpg" ></li>
+				<li><img src="img/4.jpg" ></li>
+				<li><img src="img/5.jpg" ></li>
+				<li><img src="img/1.jpg" ></li>
+			</ul>
+			<div id="navDiv">
+				<a href="javascript:;"></a>
+				<a href="javascript:;"></a>
+				<a href="javascript:;"></a>
+				<a href="javascript:;"></a>
+				<a href="javascript:;"></a>
+			</div>
+		</div>
+	</body>
+</html>

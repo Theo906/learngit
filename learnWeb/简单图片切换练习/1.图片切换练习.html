@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			*{
+				margin: 0px;
+				padding: 0px;
+			}
+			#outer{
+				width: 500px;
+				margin: 50px auto;
+				padding: 10px;
+				background-color: #bfa;
+				text-align: center;
+				
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function(){
+				//获取元素
+				var btn01 = document.getElementById("btn01");
+				var btn02 = document.getElementById("btn02");
+				var img = document.getElementsByTagName("img")[0];
+				//创建一个数组存放图片
+				var imgArr = ["img/1.jpg","img/2.jpg","img/3.jpg","img/4.jpg","img/5.jpg"];
+				//创建一个变量显示当前图片的索引
+				var index = 0;
+				//设置提示文字信息
+				var content = document.getElementById("content");
+				content.innerHTML ="一共有"+(imgArr.length)+"张图片"+"，这是第"+(index+1)+"张";
+				//绑定函数
+				btn01.onclick = function(){
+					index--;
+					if(index<0){
+						index =4;
+					}
+					img.src = imgArr[index];
+					//重置提示信息
+					content.innerHTML ="一共有"+(imgArr.length)+"张图片"+"，这是第"+(index+1)+"张";
+				};
+				btn02.onclick = function(){
+					index++;
+					if(index>4){
+						index=0;
+					}
+					img.src = imgArr[index];
+					//重置提示信息
+					content.innerHTML ="一共有"+(imgArr.length)+"张图片"+"，这是第"+(index+1)+"张";
+				};
+			};
+		</script>
+	</head>
+	<body>
+		<div id="outer">
+			<p id="content"></p>
+			<img src="img/1.jpg" >
+			<button type="button" id="btn01">上一张</button>
+			<button type="button" id="btn02">下一张</button>
+		</div>
+	</body>
+</html>
